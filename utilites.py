@@ -11,7 +11,8 @@ def get_runways_info(self):
         return self.open_errorwindow(message="Invalid airport. Airport must be in ICAO format.")
     runways = {}
     runways_info = {"LENGTH": None, "WIDTH": None, "COMP_CODE": None}
-    airport_info = {"X": None, "Y": None, "GLOBAL_ID": None, "NAME": None, "ELEVATION": None, "SERVCITY": None, "STATE": None, "IDENT": None, "ICAO_ID": None, "Runways": runways}
+    airport_info = {"X": None, "Y": None, "GLOBAL_ID": None, "NAME": None, "ELEVATION": None, 
+                    "SERVCITY": None, "STATE": None, "IDENT": None, "ICAO_ID": None, "Runways": runways}
 
     # encoding='utf-8-sig' to strip UTF-8 Byte Order Mark
     with open('C:/Users/pbaci/OneDrive/Code/Final-Project/airports.csv', 'r', encoding='utf-8-sig') as airports_file:
@@ -125,7 +126,8 @@ def get_runways_info(self):
 
     # configure combobox selections and airport information
     self.runway_dropdown.configure(values=runway_list)
-    self.airportinfo.configure(text=f"Name:  {airport_info['NAME']}\nLocation:  {airport_info['SERVCITY'].title()}, {airport_info['STATE']}\nElevation:  {int(round(float(airport_info['ELEVATION'])))}ft")
+    self.airportinfo.configure(
+        text=f"Name:  {airport_info['NAME']}\nLocation:  {airport_info['SERVCITY'].title()}, {airport_info['STATE']}\nElevation:  {int(round(float(airport_info['ELEVATION'])))}ft")
 
     return airport_info
 
