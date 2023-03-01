@@ -209,7 +209,8 @@ def calculate(self, airport_info, mode):
         self.speed_at_fifty.configure(text=f"{speed_at_fifty} kts")
         self.metar.configure(text=data["raw_text"])
         self.taf.configure(text=taf)
-        self.selected_runway_info.configure(text=f"RWY {runway}  |  Length: {airport_info['Runways'][runway]['LENGTH']}ft, Width: {airport_info['Runways'][runway]['WIDTH']}ft")
+        self.selected_runway_info.configure(
+            text=f"RWY {runway}  |  Length: {airport_info['Runways'][runway]['LENGTH']}ft, Width: {airport_info['Runways'][runway]['WIDTH']}ft")
 
         if gnd_roll > int(airport_info['Runways'][runway]['LENGTH']):
             self.takeoff_distance_warning.grid(row=2, column=1, columnspan=2, padx=20, pady=10)
