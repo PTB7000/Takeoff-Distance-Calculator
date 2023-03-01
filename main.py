@@ -72,7 +72,8 @@ class App(customtkinter.CTk):
         self.weight_entry.grid(row=4, column=0, padx=20, pady=(2, 12))
 
         # airport entry defines values for runway_dropdown, get_runways_info is called on airport entry focus out to update values of combox box
-        self.runway_dropdown = customtkinter.CTkOptionMenu(master=self.sidebar_frame, values=[], fg_color="#545454", button_color="#545454", button_hover_color="#424242", width=50)
+        self.runway_dropdown = customtkinter.CTkOptionMenu(master=self.sidebar_frame, values=[], fg_color="#545454", button_color="#545454", 
+                                                           button_hover_color="#424242", width=50)
         self.runway_dropdown.grid(row=5, column=0, padx=20, pady=12)
         self.runway_dropdown.set("Runway")
 
@@ -156,7 +157,9 @@ class App(customtkinter.CTk):
         self.to_distance_warning = customtkinter.CTkLabel(master=self.notes.tab("Notes"), text="", font=customtkinter.CTkFont(size=14))
         self.to_distance_warning.configure(text="WARNING: Takeoff distance shorter than runway length. TAKEOFF NOT ADVISED.")
 
-        self.conditions = customtkinter.CTkLabel(master=self.notes.tab("Notes"), text="Conditions: Flaps 10° | Full throttle prior to brake release | Level, Dry Runway", font=customtkinter.CTkFont(size=14))
+        self.conditions = customtkinter.CTkLabel(master=self.notes.tab("Notes"), 
+                                                 text="Conditions: Flaps 10° | Full throttle prior to brake release | Level, Dry Runway", 
+                                                 font=customtkinter.CTkFont(size=14))
         self.conditions.grid(row=2, column=1, columnspan=2, padx=20, pady=10)
 
         self.tailwind_note = customtkinter.CTkLabel(master=self.notes.tab("Notes"), text="", font=customtkinter.CTkFont(size=14))
@@ -205,7 +208,8 @@ class App(customtkinter.CTk):
             entry.grid(row=entry_row, column=1, columnspan=2, pady=12, padx=20, sticky="nsew")
             setattr(self, f"entry{i}", entry)
 
-        self.combobox = customtkinter.CTkOptionMenu(master=self.frame, values=["Paved", "Grass"], fg_color="#545454", button_color="#545454", button_hover_color="#424242" , width=50)
+        self.combobox = customtkinter.CTkOptionMenu(master=self.frame, values=["Paved", "Grass"], fg_color="#545454", button_color="#545454", 
+                                                    button_hover_color="#424242" , width=50)
         self.combobox.grid(row=16, column=1, columnspan=2, padx=20, pady=(10, 20), sticky="nsew")
         self.combobox.set("Runway Surface")
 
@@ -248,11 +252,15 @@ class App(customtkinter.CTk):
         self.speed_at_fifty = customtkinter.CTkLabel(master=self.frame_bottom_right, text="Speed at 50ft", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.speed_at_fifty.grid(row=1, column=1, columnspan=2, pady=20, padx=20, sticky="nsew")
 
-        self.conditions = customtkinter.CTkLabel(master=self.frame_bottom_right, text="Conditions: Flaps 10° | Full throttle prior to brake release | Level, Dry Runway", font=customtkinter.CTkFont(size=16))
+        self.conditions = customtkinter.CTkLabel(master=self.frame_bottom_right, 
+                                                 text="Conditions: Flaps 10° | Full throttle prior to brake release | Level, Dry Runway", 
+                                                 font=customtkinter.CTkFont(size=16))
         self.conditions.grid(row=2, column=1, columnspan=2, pady=(30, 0), padx=40, sticky="nsew")
 
-        self.note = customtkinter.CTkLabel(master=self.frame_bottom_right, text="Note: Pressure altitude above 3000ft -- the mixture should be", font=customtkinter.CTkFont(size=16))
-        self.lean = customtkinter.CTkLabel(master=self.frame_bottom_right, text="leaned to give maximum RPM in a full throttle, static run-up.", font=customtkinter.CTkFont(size=16))
+        self.note = customtkinter.CTkLabel(master=self.frame_bottom_right, text="Note: Pressure altitude above 3000ft -- the mixture should be", 
+                                           font=customtkinter.CTkFont(size=16))
+        self.lean = customtkinter.CTkLabel(master=self.frame_bottom_right, text="leaned to give maximum RPM in a full throttle, static run-up.", 
+                                           font=customtkinter.CTkFont(size=16))
         #endregion
 
 
