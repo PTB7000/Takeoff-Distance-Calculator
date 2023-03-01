@@ -163,7 +163,8 @@ class App(customtkinter.CTk):
         self.conditions.grid(row=2, column=1, columnspan=2, padx=20, pady=10)
 
         self.tailwind_note = customtkinter.CTkLabel(master=self.notes.tab("Notes"), text="", font=customtkinter.CTkFont(size=14))
-        self.tailwind_note.configure(text="Sustained tailwind component is less than 10kts but tailwind gust component is greater than 10kts. Monitor winds and use extreme caution.")
+        self.tailwind_note.configure(
+            text="Sustained tailwind component is less than 10kts but tailwind gust component is greater than 10kts. Monitor winds and use extreme caution.")
 
         self.pa_note = customtkinter.CTkLabel(master=self.notes.tab("Notes"), font=customtkinter.CTkFont(size=14))
         self.pa_note.configure(text="Pressure altitude above 3000ft -- the mixture should be\nleaned to give maximum RPM in a full throttle, static run-up.")
