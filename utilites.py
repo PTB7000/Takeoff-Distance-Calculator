@@ -126,8 +126,8 @@ def get_runways_info(self):
 
     # configure combobox selections and airport information
     self.runway_dropdown.configure(values=runway_list)
-    self.airportinfo.configure(
-        text=f"Name:  {airport_info['NAME']}\nLocation:  {airport_info['SERVCITY'].title()}, {airport_info['STATE']}\nElevation:  {int(round(float(airport_info['ELEVATION'])))}ft")
+    self.airportinfo.configure(text=f"Name:  {airport_info['NAME']}\nLocation:  {airport_info['SERVCITY'].title()}, {airport_info['STATE']}\n
+                               Elevation:  {int(round(float(airport_info['ELEVATION'])))}ft")
 
     return airport_info
 
