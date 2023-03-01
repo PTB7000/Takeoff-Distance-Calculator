@@ -124,7 +124,7 @@ def calculate(self, airport_info, mode):
         wind_dir = round(wind_dir, -1)
 
         # get TAF in raw_text
-        url = 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=3&timeType=issue&mostRecent=true&stationString='
+        url = 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=12&timeType=issue&mostRecent=true&stationString='
         url += airport
         try:
             response = urllib.request.urlopen(url)
