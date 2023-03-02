@@ -180,6 +180,8 @@ def calculate(self, airport_info, mode):
         to_weight = 2200
     if temp_c < 0:
         temp_c = 0
+    elif temp_c > 40:
+        return self.open_errorwindow(message="Temperature above 40°C. Takeoff distances undocumented.")
 
     # get initial distances
     distances = get_distances(to_weight, temp_c, pa)
