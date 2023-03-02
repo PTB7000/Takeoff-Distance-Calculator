@@ -13,7 +13,7 @@ def calculate(self, airport_info, mode):
         wind_speed = validate(self, self.entry4.get(), 0, 50, "Wind speed must be a number between 0 and 50")
         elevation = validate(self, self.entry5.get(), -500, 8000, "Airport elevation must be a number between -500 and 8000")
         runway_heading = validate(self, self.entry6.get(), 1, 360, "Runway heading must be a number between 001 and 360")
-        
+
         # if error is thrown stop calculating
         if self.error_window is not None:
             return
@@ -60,7 +60,12 @@ def calculate(self, airport_info, mode):
 
         # get METAR XML file
         url = 'https://beta.aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=3&mostRecent=true&stationString='
-        url += airport
+
+        if len(airport) == 3:
+            url += ('K' + airport)
+        else:    
+            url += airport
+        
         try:
             response = urllib.request.urlopen(url)
         except BaseException:
@@ -134,8 +139,14 @@ def calculate(self, airport_info, mode):
         wind_dir = round(wind_dir, -1)
 
         # get TAF in raw_text
-        url = 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=12&timeType=issue&mostRecent=true&stationString='
-        url += airport
+        local_taf = False
+        if len(airport) == 4:
+            url = 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=12&timeType=issue&mostRecent=true&stationString='
+            url += airport
+            local_taf = True
+        else:
+            # TAFs not available at all airports, find nearest TAF within 100 miles
+            url = f'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&radialDistance=100;{lon1},{lat1}&hoursBeforeNow=12&mostRecent=true'
         try:
             response = urllib.request.urlopen(url)
         except BaseException:
@@ -148,8 +159,14 @@ def calculate(self, airport_info, mode):
         taf = root.findtext('.//TAF/raw_text')
 
         # format TAF
-        taf = taf.replace("FM", "\n          FM").replace("BECMG", "\n          BECMG").replace("TEMPO", "\n          TEMPO")
-
+        try:
+            taf = taf.replace("FM", "\n          FM").replace("BECMG", "\n          BECMG").replace("TEMPO", "\n          TEMPO")
+            if local_taf == False:
+                taf = ("Local TAF not available. Nearest TAF:\n" + taf)
+        # handle no TAF available
+        except AttributeError:
+            taf = "TAF not available"
+    
     # calculate pressure altitude and ensure it is within chart bounds
     pa = int((29.92 - altimeter) * 1000 + elevation)
     if pa <= 0:
@@ -198,6 +215,8 @@ def calculate(self, airport_info, mode):
                 factor = 0.1 * (component // 2)
                 gnd_roll += ceil(factor * gnd_roll)
                 obst += ceil(factor * obst)
+    else:
+        component, gust_component = 0, 0
     
     if mode == "MANUAL":
         # print takeoff distances and speeds
@@ -219,8 +238,7 @@ def calculate(self, airport_info, mode):
         self.speed_at_fifty.configure(text=f"{speed_at_fifty} kts")
         self.metar.configure(text=data["raw_text"])
         self.taf.configure(text=taf)
-        self.selected_runway_info.configure(
-            text=f"RWY {runway}  |  Length: {airport_info['Runways'][runway]['LENGTH']}ft, Width: {airport_info['Runways'][runway]['WIDTH']}ft")
+        self.selected_runway_info.configure(text=f"RWY {runway}  |  Length: {airport_info['Runways'][runway]['LENGTH']}ft, Width: {airport_info['Runways'][runway]['WIDTH']}ft")
 
         if gnd_roll > int(airport_info['Runways'][runway]['LENGTH']):
             self.takeoff_distance_warning.grid(row=2, column=1, columnspan=2, padx=20, pady=10)
