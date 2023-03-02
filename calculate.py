@@ -29,8 +29,14 @@ def calculate(self, airport_info, mode):
             return self.open_errorwindow(message="Must select runway surface type")
         
     elif mode == "AUTO":
-        airport = self.airport_entry.get()
         to_weight = validate(self, self.weight_entry.get(), 1500, 2550, "Takeoff weight must be a number between 1500 and 2550")
+
+        # if error is thrown stop calculating
+        if self.error_window is not None:
+            return
+
+        # airport validated in get_runways_info
+        airport = self.airport_entry.get()
         runway = self.runway_dropdown.get()
 
         # ex: 12L = 120, 36 = 360, 8 = 080 (padded zero not needed)
