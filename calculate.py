@@ -14,6 +14,10 @@ def calculate(self, airport_info, mode):
         elevation = validate(self, self.entry5.get(), -500, 8000, "Airport elevation must be a number between -500 and 8000")
         runway_heading = validate(self, self.entry6.get(), 1, 360, "Runway heading must be a number between 001 and 360")
         
+        # if error is thrown stop calculating
+        if self.error_window is not None:
+            return
+        
         # validate altimiter entry
         altimeter = self.entry7.get()
         try:
