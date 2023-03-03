@@ -15,8 +15,11 @@ def calculate(self, airport_info, mode):
         runway_heading = validate(self, self.entry6.get(), 1, 360, "Runway heading must be a number between 001 and 360")
 
         # if error is thrown stop calculating
-        if self.error_window is not None:
-            return
+        try:
+            if self.error_window.winfo_exists():
+                return
+        except AttributeError:
+            pass
         
         # validate altimiter entry
         altimeter = self.entry7.get()
@@ -36,8 +39,11 @@ def calculate(self, airport_info, mode):
         to_weight = validate(self, self.weight_entry.get(), 1500, 2550, "Takeoff weight must be a number between 1500 and 2550")
 
         # if error is thrown stop calculating
-        if self.error_window is not None:
-            return
+        try:
+            if self.error_window.winfo_exists():
+                return
+        except AttributeError:
+            pass
 
         # airport validated in get_runways_info
         airport = self.airport_entry.get()
@@ -231,6 +237,12 @@ def calculate(self, airport_info, mode):
         if pa > 3000:
             self.note.grid(row=3, column=1, columnspan=2, pady=(12, 0), padx=20, sticky="nsew")
             self.lean.grid(row=4, column=1, columnspan=2, pady=(0, 12), padx=20, sticky="nsew")
+        else:
+            try:
+                self.note.grid_forget()
+                self.lean.grid_forget()
+            except AttributeError:
+                pass
 
     elif mode == "AUTO":
         # display weather, distances, speeds, and notes
@@ -244,9 +256,29 @@ def calculate(self, airport_info, mode):
 
         if gnd_roll > int(airport_info['Runways'][runway]['LENGTH']):
             self.takeoff_distance_warning.grid(row=2, column=1, columnspan=2, padx=20, pady=10)
+        else:
+            try:
+                self.takeoff_distance_warning.grid_forget()
+            except AttributeError:
+                pass
         if component < 10 and gust_component > 10:
             self.tailwind_note.grid(row=3, column=1, columnspan=2, padx=20, pady=10)
+        else:
+            try:
+                self.tailwind_note.grid_forget()
+            except AttributeError:
+                pass
         if pa > 3000:
             self.pa_note.grid(row=4, column=1, columnspan=2, padx=20, pady=10)
+        else:
+            try:
+                self.pa_note.grid_forget()
+            except AttributeError:
+                pass
         if wt_rwy:
             self.wt_rwy_note.grid(row=5, column=1, columnspan=2, padx=20, pady=10)
+        else:
+            try:
+                self.wt_rwy_note.grid_forget()
+            except AttributeError:
+                pass
