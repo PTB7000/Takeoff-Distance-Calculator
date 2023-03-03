@@ -283,9 +283,10 @@ class App(customtkinter.CTk):
     def open_errorwindow(self, message):
         if self.error_window is None or not self.error_window.winfo_exists():
             self.error_window = ErrorWindow(message) # create window if its None or destroyed
-            self.error_window.focus_set()
+            self.error_window.grab_set()
         else:
-            self.error_window.focus_set()  # if window exists focus it
+            # if window exists focus it
+            self.error_window.grab_set()
 
 
 if __name__ == "__main__":
