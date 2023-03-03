@@ -128,6 +128,7 @@ def get_runways_info(self):
     self.runway_dropdown.configure(values=runway_list)
     self.airportinfo.configure(text=f"Name:  {airport_info['NAME']}\nLocation:  {airport_info['SERVCITY'].title()}, {airport_info['STATE']}\n
                                Elevation:  {int(round(float(airport_info['ELEVATION'])))}ft")
+    self.runway_dropdown.set("Runway")
 
     return airport_info
 
